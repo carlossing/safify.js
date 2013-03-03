@@ -12,4 +12,4 @@ Use before displaying or using untrusted text in an Javascript app:
     var bad_html = '<script>alert("you've been XSSd");</script>';
     $(".body").html( html_safify(bad_html) );
 
-There's also a minimal html_unsafify to get back to the potentially evil html.
+There's also a minimal `html_unsafify()` to get back to the potentially evil html and a `safer_html()` function that leaves a few trusted tags in if they don't have any attributes. (This list is minimal, pull requests accepted)
