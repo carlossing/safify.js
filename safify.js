@@ -8,7 +8,7 @@
 
 function html_safify(htm) {
 
-    return htm || ""
+    return htm
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
