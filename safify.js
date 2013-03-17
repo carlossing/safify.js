@@ -6,11 +6,13 @@
  * 
  */
 
-function safify(htm) {
+function strict_safify(htm) {
 
     // this prevents possible HTML attacks using the absolutely bare-minimum
     // essentials as specified by OWASP
     // https://www.owasp.org/index.php/XSS_%28Cross_Site_Scripting%29_Prevention_Cheat_Sheet
+    // this method of pure string replacements are much safer and faster than
+    // attempting to regex-match all tags
 
     // See jQuery plugin at end for example usage
 
@@ -26,26 +28,28 @@ function safify(htm) {
 
 }
 
-function saferify(htm) {
+function safify(htm) {
 
-    // This runs normal safify but puts back in
-    // a few safer HTML tags.
-    // This may eventually be supplemented with
-    // https://github.com/cowboy/javascript-linkify
- 
-    return safify(htm)
+    // This runs normal strict_safify but puts back in
+    // a few safer HTML tags. No attributes are currently allowed.
+    // uncomplicated regex -- easy to audit
+    // images coming soon! (src= can be dangerous)
+    // This may eventually be supplemented with a custom version of
+    // https://github.com/cowboy/javascript-linkify with rel=nofollow
+
+    return strict_safify(htm)
         // bold
         .replace(/&lt;b&gt;/gi, " <b> ")
         .replace(/&lt;&#x2F;b&gt;/gi, " </b> ")
+        // strong
+        .replace(/&lt;strong&gt;/gi, " <strong> ")
+        .replace(/&lt;&#x2F;strong&gt;/gi, " </strong> ")
         // emphasis
         .replace(/&lt;em&gt;/gi, " <em> ")
         .replace(/&lt;&#x2F;em&gt;/gi, " </em> ")
         // italics
         .replace(/&lt;i&gt;/gi, " <i> ")
         .replace(/&lt;&#x2F;i&gt;/gi, " </i> ")
-        // h1
-        .replace(/&lt;h1&gt;/gi, " <h1> ")
-        .replace(/&lt;&#x2F;h1&gt;/gi, " </h1> ")
         // li
         .replace(/&lt;li&gt;/gi, " <li> ")
         .replace(/&lt;&#x2F;li&gt;/gi, " </li> ")
@@ -55,6 +59,24 @@ function saferify(htm) {
         // ol
         .replace(/&lt;ol&gt;/gi, " <ol> ")
         .replace(/&lt;&#x2F;ol&gt;/gi, " </ol> ")
+        // h1
+        .replace(/&lt;h1&gt;/gi, " <h1> ")
+        .replace(/&lt;&#x2F;h1&gt;/gi, " </h1> ")
+        // h2
+        .replace(/&lt;h2&gt;/gi, " <h2> ")
+        .replace(/&lt;&#x2F;h2&gt;/gi, " </h2> ")
+        // h3
+        .replace(/&lt;h3&gt;/gi, " <h3> ")
+        .replace(/&lt;&#x2F;h3&gt;/gi, " </h3> ")
+        // h4
+        .replace(/&lt;h4&gt;/gi, " <h4> ")
+        .replace(/&lt;&#x2F;h4&gt;/gi, " </h4> ")
+        // h5
+        .replace(/&lt;h5&gt;/gi, " <h5> ")
+        .replace(/&lt;&#x2F;h5&gt;/gi, " </h5> ")
+        // h6
+        .replace(/&lt;h6&gt;/gi, " <h6> ")
+        .replace(/&lt;&#x2F;h6&gt;/gi, " </h6> ")
         // table
         .replace(/&lt;table&gt;/gi, " <table> ")
         .replace(/&lt;&#x2F;table&gt;/gi, " </table> ")
@@ -72,7 +94,7 @@ function saferify(htm) {
         ;
 }
 
-function unsafify(htm) {
+function unstrict_safify(htm) {
     // only use this for input or non-HTML textarea plugins
     // (don't use with Javascript HTML editors!)
     var htm = htm || "";
@@ -89,29 +111,39 @@ function unsafify(htm) {
 
 /*
  *  jQuery Safify
- *  Ignored if jQuery is not loaded.
  *
- *  This allows some minimal HTML while keeping out the bad stuff.
+ *  Allows some minimal HTML while keeping out the bad stuff.
  *  (If you want to convert all HTML to plain text like pure safify.js, jQuery
  *  already has $.text built-in.)
  *
+ *
+ *      var evil = "<script>alert(1);</script>";
+ *
+ *
  *  To use, just replace your normal:
- *      $("div").html("some unknown html");
+ *
+ *
+ *      $("div").html(evil);
  *         or:
- *      $("div").text("some unknown html");
+ *      $("div").text(evil);
+ *
  *
  *  with:
- *      $("div").safify("some unknown html");
  *
- *  It's really that simple!
+ *      $("div").safify(evil);
  *
- *  var evil = "<script>alert(1);</script>";
- *  $("body") safify(evil);
+ *  unsafify() is not wrapped to keep it from being accidentally (mis)used.
 */
 
 (function($) {
+    // Allows "safe" tags
     $.fn.safify = function(evil) {
-        this.html(saferify(evil));
+        this.html(safify(evil));
+        return this;
+    }
+    // Allows no tags
+    $.fn.strict_safify = function(evil) {
+        this.html(strict_safify(evil));
         return this;
     }
 })(jQuery);
