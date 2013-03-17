@@ -14,6 +14,7 @@ function safify(htm) {
 
     // See jQuery plugin at end for example usage
 
+    var htm = htm || "";
     return htm
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
@@ -31,7 +32,7 @@ function saferify(htm) {
     // a few safer HTML tags.
     // This may eventually be supplemented with
     // https://github.com/cowboy/javascript-linkify
-
+ 
     return safify(htm)
         // bold
         .replace(/&lt;b&gt;/gi, " <b> ")
@@ -74,6 +75,7 @@ function saferify(htm) {
 function unsafify(htm) {
     // only use this for input or non-HTML textarea plugins
     // (don't use with Javascript HTML editors!)
+    var htm = htm || "";
     return htm
         .replace(/<br>/g, '\n')
         .replace(/&amp;/g, '&')
