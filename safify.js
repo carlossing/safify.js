@@ -1,12 +1,18 @@
-;/* safify.js
+;/* safify.jquery.js
  *
- * https://github.com/jamiesonbecker/safify.js
+ * https://github.com/jamiesonbecker/jquery-safify
  * Copyright (c) 2013 Jamieson Becker, http://jamiesonbecker.com
  * MIT License
  * 
  */
 
-function html_safify(htm) {
+function safify(htm) {
+
+    // this prevents possible HTML attacks using the absolutely bare-minimum
+    // essentials as specified by OWASP
+    // https://www.owasp.org/index.php/XSS_%28Cross_Site_Scripting%29_Prevention_Cheat_Sheet
+
+    // See jQuery plugin at end for example usage
 
     return htm
         .replace(/&/g, '&amp;')
@@ -19,12 +25,14 @@ function html_safify(htm) {
 
 }
 
-function safer_html(htm) {
+function saferify(htm) {
 
-    // restore just a few safe HTML tags, see also
+    // This runs normal safify but puts back in
+    // a few safer HTML tags.
+    // This may eventually be supplemented with
     // https://github.com/cowboy/javascript-linkify
 
-    return html_safify(htm)
+    return safify(htm)
         // bold
         .replace(/&lt;b&gt;/gi, " <b> ")
         .replace(/&lt;&#x2F;b&gt;/gi, " </b> ")
@@ -63,10 +71,9 @@ function safer_html(htm) {
         ;
 }
 
-function html_unsafify(htm) {
-    // this is a minimal amount of escaping according to
-    // https://www.owasp.org/index.php/XSS_%28Cross_Site_Scripting%29_Prevention_Cheat_Sheet
-    // to prevent XSS.
+function unsafify(htm) {
+    // only use this for input or non-HTML textarea plugins
+    // (don't use with Javascript HTML editors!)
     return htm
         .replace(/<br>/g, '\n')
         .replace(/&amp;/g, '&')
@@ -76,3 +83,34 @@ function html_unsafify(htm) {
         .replace(/&#x27;/g, "'")
         .replace(/&#x2F;/g, '/');
 }
+
+
+/*
+ *  jQuery Safify
+ *  Ignored if jQuery is not loaded.
+ *
+ *  This allows some minimal HTML while keeping out the bad stuff.
+ *  (If you want to convert all HTML to plain text like pure safify.js, jQuery
+ *  already has $.text built-in.)
+ *
+ *  To use, just replace your normal:
+ *      $("div").html("some unknown html");
+ *         or:
+ *      $("div").text("some unknown html");
+ *
+ *  with:
+ *      $("div").safify("some unknown html");
+ *
+ *  It's really that simple!
+ *
+ *  var evil = "<script>alert(1);</script>";
+ *  $("body") safify(evil);
+*/
+
+(function($) {
+    $.fn.safify = function(evil) {
+        this.html(saferify(evil));
+        return this;
+    }
+})(jQuery);
+
