@@ -44,24 +44,24 @@ The jQuery safify plugin relies on included pure Javascript methods:
     italics, etc. This is the most useful version generally. The following tags
     are restored (no attributes are allowed):
 
-    -   b
-    -   strong
-    -   em
-    -   i
-    -   table
-    -   tr
-    -   td
-    -   li
-    -   ul
-    -   ol
-    -   h1
-    -   h2
-    -   h3
-    -   h4
-    -   h5
-    -   h6
-    -   p
-    -   br
+    -   `b`
+    -   `strong`
+    -   `em`
+    -   `i`
+    -   `table`
+    -   `tr`
+    -   `td`
+    -   `li`
+    -   `ul`
+    -   `ol`
+    -   `h1`
+    -   `h2`
+    -   `h3`
+    -   `h4`
+    -   `h5`
+    -   `h6`
+    -   `p`
+    -   `br`
 
 *   `strict_safify()` escapes HTML according to OWASP standards and escapes all
     dangerous characters.
