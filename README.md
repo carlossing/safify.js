@@ -2,7 +2,7 @@ safify.js
 =========
 
 
-jQuery Safify is a simple jQuery plugin to convert potentially risky HTML to 'safer' HTML based on OWASP and leaves in some minimal, safe HTML. Put another way, it does things like convert `<script>` to `&lt;script&gt;` for on-screen display.
+jQuery Safify is a simple jQuery plugin to convert potentially risky HTML to 'safer' HTML based on OWASP and leaves in some minimal, safe HTML. Put another way, it does things like convert `<script>` to `&lt;script&gt;` for on-screen display while leaving safe tags like `<b>` in place.
 
 
 Introduction
