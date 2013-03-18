@@ -22,7 +22,7 @@ in a div (not back in the same textarea or input field):
     <script>  alert(1);  </script>
 
 If you get an alert box, then your code is vulnerable to XSS. Or, put another
-way, `$(".div").html("<script>alert(1)</script>")` is unsafe, but replacing
+way, `$(".div").html("   <script> alert(1) </script>   ")` is unsafe, but replacing
 `html()` with `safify()` will fix it.
 
 
