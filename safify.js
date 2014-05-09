@@ -140,11 +140,11 @@ function unstrict_safify(htm) {
     $.fn.safify = function(evil) {
         this.html(safify(evil));
         return this;
-    }
+    };
     // Allows no tags
     $.fn.strict_safify = function(evil) {
         this.html(strict_safify(evil));
         return this;
-    }
+    };
 })(jQuery);
 
