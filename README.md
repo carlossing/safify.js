@@ -1,8 +1,7 @@
-*Now also available in [unframework.js](https://github.com/jamiesonbecker/unframework.js)*
-
 safify.js
 =========
 
+Please note: despite not seeing significant updates, this is stable, simple code that will be quickly updated if any security concerns are found. In other words, its lack of changes are a feature, not a bug or a sign of abandonware.
 
 jQuery Safify is a simple jQuery plugin to sanitize potentially risky HTML to
 safe HTML based on OWASP while leaving in safe HTML tags. Put another way, it
