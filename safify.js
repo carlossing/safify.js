@@ -1,7 +1,7 @@
 ;/* safify.jquery.js
  *
  * https://github.com/jamiesonbecker/jquery-safify
- * Copyright (c) 2013 Jamieson Becker, http://jamiesonbecker.com
+ * Copyright (c) 2017 Jamieson Becker, http://jamiesonbecker.com
  * MIT License
  * 
  */
